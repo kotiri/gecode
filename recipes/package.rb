@@ -25,20 +25,19 @@ when 'ubuntu','debian'
 
   include_recipe 'apt'
 
-  # use opscode apt repo for older releases
-  if (platform?("debian") && (node['platform_version'].to_f < 7.0)) || 
-      (platform?("ubuntu") && (node['platform_version'].to_f < 11.0))
-
-    # add Opscode's apt repo to sources
-    apt_repository "opscode" do
-      uri "http://apt.opscode.com"
-      components ["main"]
-      distribution node['lsb']['codename']
-      key "2940ABA983EF826A"
-      keyserver "pgpkeys.mit.edu"
-      action :add
+  # add Opscode's apt repo to sources
+  apt_repository "opscode" do
+    uri "http://apt.opscode.com"
+    components ["main"]
+    distribution node['lsb']['codename']
+    key "2940ABA983EF826A"
+    keyserver "pgpkeys.mit.edu"
+    only_if do
+      # use opscode apt repo for older releases
+      (platform?("debian") && (node['platform_version'].to_f < 7.0)) || 
+        (platform?("ubuntu") && (node['platform_version'].to_f < 11.0))
     end
-
+    action :add
   end
 
   apt_package 'libgecode-dev' do
