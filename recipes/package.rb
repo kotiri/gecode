@@ -26,8 +26,8 @@ when 'ubuntu','debian'
   include_recipe 'apt'
 
   # use opscode apt repo for older releases
-  if (platform?("debian") && (node.platform_version.to_f < 7.0)) || 
-      (platform?("ubuntu") && (node.platform_version.to_f < 11.0))
+  if (platform?("debian") && (node['platform_version'].to_f < 7.0)) || 
+      (platform?("ubuntu") && (node['platform_version'].to_f < 11.0))
 
     # add Opscode's apt repo to sources
     apt_repository "opscode" do
