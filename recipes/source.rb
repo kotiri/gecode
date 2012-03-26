@@ -41,7 +41,7 @@ end
 
 # configure the dynamic linker, redhat only
 case node['platform']
-when 'centos', 'redhat', 'fedora'
+when 'amazon', 'centos', 'redhat', 'scientific', 'fedora'
   directory "/etc/ld.so.conf.d/" do
     owner "root"
     group "root"
